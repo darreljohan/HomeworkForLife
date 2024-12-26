@@ -1,0 +1,33 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  height: 2rem;
+}
+
+.logo {
+  margin-right: auto;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.logoTitle {
+}
+
+.logo img {
+  height: 100%;
+  width: auto;
+  filter: invert(0.9);
+}
+
+.header .button {
+  width: 5rem;
+  font-size: 1rem;
+  margin-right: 1rem;
+  background-color: var(#242424);
+  text-align: center;
+  align-content: center;
+  font-family: "Roboto";
+  font-weight: 500;
+}

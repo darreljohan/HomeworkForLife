@@ -1,0 +1,5 @@
+.cardGridStoryAdd {
+  flex: 5;
+  background-color: lightblue;
+  height: 100%; /* Full height */
+}
