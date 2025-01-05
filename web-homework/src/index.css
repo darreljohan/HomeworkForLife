@@ -1,40 +1,42 @@
 :root {
   color-scheme: light dark;
-  --background-color: #242424;
+  background-color: #1c1c1d;
+  --workground-color: #262524;
+  --background-color: #1c1c1d;
+  --background-alt-color: #242424;
   --foreground-color: #e3e3e3;
-  --mid-color: #A1A1A1
-  color: var(--dark-text-color);
+  --mid-color: #a1a1a1;
 }
 
-body{
-  margin:auto;
-  width:57vw; /*Using 3:4 ratio*/
-  height:95vh;
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
 }
 
 @media (max-width: 768px) {
-  body{
-    margin:auto;
-    width:90vw; /*Using 3:4 ratio*/
+  body {
+    margin: auto;
+    width: 90vw;
   }
 }
 
-body.white{
+body.white {
   --background-color: #e3e3e3;
   --foreground-color: #242424;
 }
 
-.Light-shadow{
+.Light-shadow {
   background: rgb(0, 36, 2);
   background: linear-gradient(
     90deg,
-rgba(0, 56, 10, 1) 45%, /* Dark green */
-    rgba(72, 189, 110, 1) 85%, /* Brighter green */
-    rgba(255, 255, 255, 1) 100% /* Bright white */
+    rgba(0, 56, 10, 1) 45%,
+    /* Dark green */ rgba(72, 189, 110, 1) 85%,
+    /* Brighter green */ rgba(255, 255, 255, 1) 100% /* Bright white */
   );
 }
 
-.Dark-shadow{
+.Dark-shadow {
   background: rgb(217, 217, 217);
   background: linear-gradient(
     90deg,

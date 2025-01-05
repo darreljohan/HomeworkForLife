@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Note } from "../../models/note";
 import "./CarouselStoryCard.css";
 import MOCK_DATA from "./MOCK_NOTE.json";
+import CardStory from "../Card-Story/CardStory";
+import CardStoryAdd from "../Card-Story/CardStoryAdd";
 
 function getRandomUniqueObjects(data: Array<Note>, count: number): Array<Note> {
   if (data.length < count) {
@@ -12,19 +14,24 @@ function getRandomUniqueObjects(data: Array<Note>, count: number): Array<Note> {
 }
 
 export default function CarouselStoryCard() {
-  const [randomNote, setRandomNote] = useState<Array<Note>>([]);
+  // Note object state
+  const [randomNotes, setRandomNotes] = useState<Array<Note>>([]);
 
   useEffect(() => {
-    setRandomNote(getRandomUniqueObjects(MOCK_DATA, 7));
+    setRandomNotes(getRandomUniqueObjects(MOCK_DATA, 6));
   }, []);
 
   return (
     <div className="carouselStoryCard">
       <div className="showAllStory">See All Card</div>
       <div className="carouselContainer">
-        <div className="slideLeft"></div>
-        <div className="cardSlider"></div>
-        <div className="slideRight"></div>
+        <CardStoryAdd />
+        {randomNotes.map((card) => (
+          <CardStory
+            note={card.note}
+            dateWritten={new Date(card.date_written)}
+          />
+        ))}
       </div>
     </div>
   );

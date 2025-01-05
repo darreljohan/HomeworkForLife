@@ -15,39 +15,41 @@ function Header() {
         <img src={Logo}></img>
         <h1 className="logoTitle">Homework for Life</h1>
       </div>
-      {!user && (
-        <>
-          <div
-            className="signin button"
+      <div className="navigation">
+        {!user && (
+          <>
+            <div
+              className="signin button"
+              onClick={() => {
+                login();
+              }}
+            >
+              Sign in
+            </div>
+            <div
+              className="signup button"
+              onClick={() => {
+                setRegisterFieldState(true);
+              }}
+            >
+              Sign up
+            </div>
+          </>
+        )}
+        {user && (
+          <button
+            className="logout button"
             onClick={() => {
-              login();
+              logout();
             }}
           >
-            Sign in
-          </div>
-          <div
-            className="signup button"
-            onClick={() => {
-              setRegisterFieldState(true);
-            }}
-          >
-            Sign up
-          </div>
-        </>
-      )}
-      {user && (
-        <button
-          className="logout button"
-          onClick={() => {
-            logout();
-          }}
-        >
-          logout
-        </button>
-      )}
-      {registerFieldState && (
-        <RegisterFieldWindow setRegisterFieldState={setRegisterFieldState} />
-      )}
+            logout
+          </button>
+        )}
+        {registerFieldState && (
+          <RegisterFieldWindow setRegisterFieldState={setRegisterFieldState} />
+        )}
+      </div>
     </div>
   );
 }

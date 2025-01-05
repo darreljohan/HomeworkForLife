@@ -4,8 +4,8 @@ import "./HomePage.css";
 import Header from "../Header/Header";
 
 import { authContext } from "../Provider-Auth/AuthContext";
-import CardCarousel from "../Carousel-StoryCard/CardCarousel";
 import CarouselStoryCard from "../Carousel-StoryCard/CarouselStoryCard";
+import CarouselMessage from "../Carousel-Message/CarouselMessage";
 
 function HomePage() {
   const [name, setName] = useState("Human");
@@ -41,6 +41,7 @@ function HomePage() {
         </p>
       </div>
       <CarouselStoryCard />
+      <CarouselMessage />
     </div>
   );
 }

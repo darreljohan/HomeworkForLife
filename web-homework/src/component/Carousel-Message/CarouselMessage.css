@@ -1,0 +1,19 @@
+.carouselMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.quoteMessage {
+  font-family: "Poppins";
+  font-size: calc(0.7vw + 0.7vh);
+  font-style: italic;
+}
+
+.authorName {
+  font-family: "Poppins";
+  font-size: calc(0.5vw + 0.5vh);
+}
