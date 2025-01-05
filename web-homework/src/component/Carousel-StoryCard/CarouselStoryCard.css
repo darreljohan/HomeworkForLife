@@ -1,4 +1,37 @@
 .carouselStoryCard {
   display: flex;
-  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.showAllStory {
+  width: 100%;
+  text-align: right;
+  justify-content: right;
+}
+
+.carouselContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1vh;
+  padding: 2vh 0 2vh 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  box-sizing: content-box;
+  scroll-snap-type: x mandatory;
+}
+
+.carouselContainer::-webkit-scrollbar {
+  height: 1.5vh;
+}
+
+.carouselContainer::-webkit-scrollbar-thumb {
+  background-color: var(--workground-color);
+  border-radius: 1vh;
+}
+
+.carouselContainer::-webkit-scrollbar-track {
+  background-color: var(--background-color);
+  border-radius: 1vh;
 }
