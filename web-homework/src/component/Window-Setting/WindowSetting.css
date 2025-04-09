@@ -1,0 +1,45 @@
+.windowSetting {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 33vw;
+  height: 80vh;
+  gap: 1vh;
+  background-color: var(--background-color);
+  z-index: 1010;
+  top: 50%; /* Position the container in the middle vertically */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 50px 17px rgba(11, 2, 2, 0.75);
+  -webkit-box-shadow: 0px 0px 50px 17px rgba(11, 2, 2, 0.75);
+  -moz-box-shadow: 0px 0px 50px 17px rgba(11, 2, 2, 0.75);
+  padding: 5vh 5vw 5vh 5vw;
+  box-sizing: border-box;
+}
+
+.exitWindowSetting {
+  position: absolute;
+  top: 2vw;
+  right: 2vw;
+  font-size: 2vh;
+  cursor: pointer;
+  font-family: "roboto";
+}
+
+.settingPremise {
+  display: flex;
+  text-align: left;
+  width: 100%;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: min(3.5vw, 3.5vh);
+}
+
+.settingSubPremise {
+  width: 100%;
+  font-family: "poppins";
+  font-size: min(1.6vw, 1.6vh);
+  color: var(--mid-color);
+}

@@ -1,0 +1,80 @@
+.SettingForm {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 5vh 0 0 0;
+  gap: 1rem;
+}
+
+.SettingForm .Exit {
+  position: absolute;
+  text-align: right;
+  top: 5vh;
+  right: 0;
+  font-weight: 900;
+  width: 4vh;
+  height: 4vh;
+}
+
+.SettingForm-Premise {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.SettingForm-Logo {
+  width: auto;
+  height: clamp(3rem, 5vh, 5rem);
+  filter: invert(0.9);
+}
+
+.SettingForm-Title {
+  padding: 1rem 0 0 0;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: bold;
+}
+
+.SettingForm-Subtitle {
+  font-size: clamp(0.8rem, 1.5vw, 1.5rem);
+}
+
+.SettingForm-Form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.Section input {
+  width: 100%;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  border: 2px solid var(--workground-color);
+}
+
+.SettingForm-Form label {
+  font-size: clamp(0.8rem, 1.2vw, 1.5rem);
+}
+
+.BirthDate {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+}
+
+.SubmitButton {
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  background-color: var(--success-color);
+}

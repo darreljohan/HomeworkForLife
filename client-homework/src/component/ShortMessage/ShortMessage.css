@@ -1,0 +1,87 @@
+.ShortMessage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 20%,
+    rgba(0, 0, 0, 0) 80%
+  ); /* Gradient overlay */
+  border-radius: inherit; /* Match the border-radius of the parent */
+  z-index: 1; /* Ensure the overlay is above the background image */
+}
+
+.ShortMessage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  background-image: url("../../assets/mobile-registerPicture.jpg");
+  background-size: cover;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  padding: 10vh 2rem 10vh 2rem;
+}
+
+.Exit {
+  position: absolute;
+  text-align: right;
+  top: 5vh;
+  right: 5vh;
+  font-weight: 900;
+  width: 4vh;
+  height: 4vh;
+}
+
+.Content {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 2vh;
+  justify-content: center;
+  z-index: 2;
+}
+
+.Logo {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  align-items: start;
+}
+
+.Register-logo {
+  width: auto;
+  height: clamp(3rem, 5vh, 5rem);
+  filter: invert(0.9);
+}
+
+.Premise {
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: bold;
+}
+
+.Message {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: clamp(0.9rem, 1.2vw, 1.5rem);
+  font-weight: 300;
+}
+
+.Continue-Button {
+  width: 100%;
+  text-align: center;
+  background-color: var(--success-color);
+  box-sizing: border-box;
+  padding: 1rem 1rem 1rem 1rem;
+  border-radius: 0.5rem;
+  z-index: 2;
+}

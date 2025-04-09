@@ -1,0 +1,67 @@
+.windowLoginField {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 33vw;
+  height: 80vh;
+  gap: 1vh;
+  background-color: var(--background-color);
+  z-index: 1010;
+  top: 50%; /* Position the container in the middle vertically */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 50px 17px rgba(11, 2, 2, 0.75);
+  -webkit-box-shadow: 0px 0px 50px 17px rgba(11, 2, 2, 0.75);
+  -moz-box-shadow: 0px 0px 50px 17px rgba(11, 2, 2, 0.75);
+  padding: 5vh 5vw 5vh 5vw;
+  box-sizing: border-box;
+}
+
+.exitWindowLoginField {
+  position: absolute;
+  top: 2vw;
+  right: 2vw;
+  font-size: 2vh;
+  cursor: pointer;
+  font-family: "roboto";
+}
+
+.loginPremise {
+  width: 100%;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: min(3.5vw, 3.5vh);
+}
+
+.loginSubPremise {
+  width: 100%;
+  font-family: "poppins";
+  font-size: min(1.6vw, 1.6vh);
+  color: var(--mid-color);
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 1vh 0 1vh 0;
+}
+
+.borderAlternative {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-family: "Segoe UI";
+  justify-content: center;
+}
+.borderAlternative::before,
+.borderAlternative::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+  margin: 0 10px;
+}

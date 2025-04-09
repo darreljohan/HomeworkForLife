@@ -1,0 +1,68 @@
+.LoginForm {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 5vh 0 0 0;
+  gap: 1rem;
+}
+
+.LoginForm .Exit {
+  position: absolute;
+  text-align: right;
+  top: 5vh;
+  right: 0vh;
+  font-weight: 900;
+  width: 4vh;
+  height: 4vh;
+}
+
+.LoginForm-Premise {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1em;
+  width: 100%;
+}
+
+.LoginForm-Logo {
+  width: auto;
+  height: clamp(3rem, 5vh, 5rem);
+  filter: invert(0.9);
+}
+
+.LoginForm-Title {
+  font-size: clamp(1.5rem, 2.5vw, 3rem);
+  font-weight: bold;
+}
+
+.LoginForm-Form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.Section input {
+  width: 100%;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  border: 2px solid var(--workground-color);
+}
+
+.Section label {
+  font-size: clamp(0.8rem, 1.2vw, 1.5rem);
+}
+
+.SubmitButton {
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  background-color: var(--success-color);
+}

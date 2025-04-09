@@ -1,0 +1,33 @@
+.windowJournalShowcase {
+  display: flex;
+  flex-direction: row;
+  gap: 2vw;
+  width: 60vw;
+  height: 80vh;
+  z-index: 1010;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%; /* Position the container in the middle vertically */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--background-color);
+  box-sizing: border-box;
+  box-shadow: 0px 0px 50px 17px rgba(11, 2, 2, 0.75);
+  -webkit-box-shadow: 0px 0px 50px 17px rgba(11, 2, 2, 0.75);
+  -moz-box-shadow: 0px 0px 50px 17px rgba(11, 2, 2, 0.75);
+}
+
+.MuiDateCalendar-root {
+  background-color: var(--workground-color);
+  margin: 0 0;
+}
+
+.exitWindowJournalShowcase {
+  position: absolute;
+  top: 2vw;
+  right: 2vw;
+  font-size: 2vh;
+  cursor: pointer;
+  font-family: "roboto";
+}

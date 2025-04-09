@@ -6,6 +6,7 @@
   --background-alt-color: #242424;
   --foreground-color: #e3e3e3;
   --mid-color: #a1a1a1;
+  --success-color: rgba(74, 123, 45, 1);
 }
 
 body {

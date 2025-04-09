@@ -41,7 +41,7 @@ function RegisterFieldWindow({ setRegisterFieldState }: RegisterFieldProps) {
           X
         </button>
         <form className="registerForm" onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="titlePane">Register</h1>
+          <h1 className="titlePane">Registering to Homework for </h1>
           <div className="nameSection section">
             <label htmlFor="name">Name</label>
             <input

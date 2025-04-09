@@ -1,0 +1,25 @@
+.sectionSettingForm {
+  display: flex;
+  width: 100%;
+  margin: 1.5vh 0 1.5vh 0;
+}
+
+.sectionSettingFormComponent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2vh;
+}
+
+.sectionSettingFormComponent .section {
+  display: flex;
+  flex-direction: column;
+  font-family: "Roboto", sans-serif;
+  font-size: min(2vw, 2vh);
+  gap: 0.5vh;
+  height: min();
+}
+
+.sectionSettingFormComponent .section input {
+  padding: 1vh 0.7vw 1vh 0.7vw;
+}

@@ -1,0 +1,105 @@
+.RegisterForm {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 5vh 0 0 0;
+  gap: 1rem;
+}
+
+.RegisterForm .Exit {
+  position: absolute;
+  text-align: right;
+  top: 5vh;
+  right: 0vh;
+  font-weight: 900;
+  width: 4vh;
+  height: 4vh;
+}
+
+.RegisterForm-Premise {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1em;
+  width: 100%;
+}
+
+.RegisterForm-Title {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: bold;
+}
+
+.RegisterForm-Logo {
+  width: auto;
+  height: clamp(3rem, 5vh, 5rem);
+  filter: invert(0.9);
+}
+
+.RegisterForm-Form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.Section .label {
+  font-size: clamp(0.8rem, 2vw, 1.5rem);
+}
+
+.Section input {
+  width: 100%;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  border: 2px solid var(--workground-color);
+}
+
+.Section .valid {
+  border: 2px solid var(--success-color);
+}
+
+.submit {
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  background-color: var(--success-color);
+}
+
+.AlternativeForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.DivideLine {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.GoogleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: var(--success-color);
+  filter: grayscale(1);
+}
+
+.GoogleIcon {
+  background-color: white;
+  border-radius: 50%;
+}

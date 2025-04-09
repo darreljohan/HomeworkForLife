@@ -1,0 +1,45 @@
+:root {
+  font-family: "Poppins";
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --background-color: #242424;
+  --workground-color: #3a3937;
+
+  --negative-gradient-color-1: rgba(30, 117, 179, 1);
+  --negative-gradient-color-2: rgba(165, 210, 227, 1);
+  --negative-gradient-color-3: rgba(244, 244, 244, 1);
+
+  --positive-gradient-color-1: rgba(74, 123, 45, 1);
+  --positive-gradient-color-2: rgba(162, 215, 126, 1);
+  --positive-gradient-color-3: rgba(244, 244, 244, 1);
+
+  --success-color: rgba(74, 123, 45, 1);
+  --failed-color: rgba(190, 80, 90, 1);
+}
+
+h1,
+ul,
+li,
+button,
+p,
+input,
+div,
+textarea,
+button {
+  all: unset;
+  display: block;
+}
+
+html,
+body {
+}

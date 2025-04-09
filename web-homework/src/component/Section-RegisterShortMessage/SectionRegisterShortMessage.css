@@ -1,0 +1,58 @@
+.shortMessage {
+  display: flex;
+  flex-direction: column-reverse;
+  flex: 16 1 65%;
+  background-image: url("../../assets/registerPicture-filter2.jpg");
+  background-size: cover;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  box-sizing: border-box;
+  border-radius: min(2.5vh, 2.5vw);
+  margin: 1rem 1rem 1rem 1rem;
+  box-shadow: 0px 0px 50px 5px rgba(11, 2, 2, 0.75);
+  -webkit-box-shadow: 0px 0px 50px 5px rgba(11, 2, 2, 0.75);
+  -moz-box-shadow: 0px 0px 50px 5px rgba(11, 2, 2, 0.75);
+  position: relative;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  height: 50%;
+  position: relative;
+  z-index: 2;
+  padding: 0 2vw 0 2vw;
+}
+
+.messageHeader {
+  font-family: "Segoe UI";
+  font-weight: bold;
+  font-size: min(4vh, 4vw);
+}
+
+.messageContent {
+  font-family: "Segoe UI";
+  font-size: min(2vh, 2vw);
+}
+
+.messagePoint {
+  font-family: "Segoe UI";
+  font-size: min(2vh, 2vw);
+}
+
+.shortMessage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 20%,
+    rgba(0, 0, 0, 0) 80%
+  ); /* Gradient overlay */
+  border-radius: inherit; /* Match the border-radius of the parent */
+  z-index: 1; /* Ensure the overlay is above the background image */
+}
