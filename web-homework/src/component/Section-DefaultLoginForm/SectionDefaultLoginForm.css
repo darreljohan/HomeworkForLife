@@ -1,0 +1,65 @@
+.sectionDefaultLoginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 1vh 0 1vh 0;
+}
+
+.defaultLoginFormComponent {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  width: 100%;
+}
+.defaultLoginFormComponent .section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1vh;
+}
+
+.section label {
+  font-family: "Roboto", sans-serif;
+  font-size: min(2vw, 2vh);
+}
+
+.submitButton {
+  margin: 2vh 0 0 0;
+  padding: 1.5vh 0 1.5vh 0;
+  border: 0 transparent;
+  font-size: min(2vw, 2vh);
+  border-radius: min(1vh, 1vw);
+  background-color: var(--success-color);
+}
+
+.infoSymbol {
+  position: relative;
+  cursor: pointer;
+  margin-left: 1vw;
+}
+
+.infoSymbol::after {
+  content: attr(title);
+  position: absolute;
+  top: 0; /* Position the tooltip at the top of the symbol */
+  left: calc(
+    100% + 1vw
+  ); /* Position the tooltip 1vw to the right of the symbol */
+  background-color: #333;
+  color: #fff;
+  padding: 1vh 1vw 1vh 1vw;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  z-index: 10;
+}
+
+.infoSymbol:hover::after {
+  opacity: 1;
+  visibility: visible;
+}

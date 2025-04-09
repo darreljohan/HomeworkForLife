@@ -10,15 +10,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const fetchUser = async () => {
       setLoading(true);
       setTimeout(() => {}, 10000);
-      setUser(
-        new User(
-          "uid",
-          "email",
-          "name",
-          new Date(2002, 6, 1),
-          new Date(2042, 6, 1)
-        )
-      );
+      setUser(new User("uid", "email", "name", new Date(2002, 6, 1), 40));
       setLoading(false);
     };
     fetchUser();
@@ -30,15 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const login = () => {
-    setUser(
-      new User(
-        "uid",
-        "email",
-        "name",
-        new Date(2002, 6, 1),
-        new Date(2042, 6, 1)
-      )
-    );
+    setUser(new User("uid", "email", "name", new Date(2002, 6, 1), 40));
   };
 
   return (

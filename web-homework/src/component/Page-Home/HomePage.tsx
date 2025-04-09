@@ -8,7 +8,7 @@ import CarouselStoryCard from "../Carousel-StoryCard/CarouselStoryCard";
 import CarouselMessage from "../Carousel-Message/CarouselMessage";
 
 function HomePage() {
-  const [name, setName] = useState("Human");
+  const [name, setName] = useState("John Doe");
   const { user } = useContext(authContext);
   const [deathDate, setDeathDate] = useState<Date>(
     (user?.expectedDeathDate as Date) || new Date(2030, 11, 31)

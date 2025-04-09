@@ -12,7 +12,7 @@ export default function CardStoryAdd() {
         </div>
       </div>
       <div className="addSection">
-        <div>Let this day be written and remembered.</div>
+        <div>Today is storyworthy. Write now, remember forever!</div>
       </div>
     </div>
   );

@@ -1,0 +1,6 @@
+.ShowcasePage {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 95vh;
+}

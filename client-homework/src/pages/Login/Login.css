@@ -1,0 +1,13 @@
+.LoginPage {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: 97vh;
+  margin: auto;
+}
+
+@media only screen and (min-width: 992px) {
+  .LoginPage {
+    width: 60vw;
+  }
+}

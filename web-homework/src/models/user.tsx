@@ -7,6 +7,6 @@ export class User {
     public email: string | null, // User email
     public displayName: string | null, // User's display name
     public birthDate: Date,
-    public expectedDeathDate: Date // Custom metadata field
+    public ageExpentancy: number // Custom metadata field
   ) {}
 }

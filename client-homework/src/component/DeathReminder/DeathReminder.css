@@ -1,0 +1,23 @@
+.DeathReminder {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem 0 1rem 0;
+  gap: 0.5rem;
+}
+
+.DeathReminder .text-primary {
+  font-size: clamp(1.2rem, 2vw, 3rem);
+  font-weight: bold;
+}
+
+.DeathReminder .text-secondary {
+  font-size: clamp(0.7rem, 1.5vw, 1.2rem);
+}
+
+.DeathReminder-placeholder {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+  align-items: center;
+}

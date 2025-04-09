@@ -1,0 +1,24 @@
+.CardSlider {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  margin: 1rem 0 0 0;
+}
+
+.ShowAllCard {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  width: 100%;
+  font-size: clamp(0.8rem, 1vw, 2rem);
+}
+
+.WeekCardSlider {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 1vh;
+  height: 40vh;
+  overflow-y: auto;
+}

@@ -4,10 +4,9 @@ export default function CarouselMessage() {
   return (
     <div className="carouselMessage">
       <div className="quoteMessage">
-        "In the end, we will remember not the words of our enemies, but the
-        silence of our friends".
+        ""Life is a journey, not a destination."".
       </div>
-      <div className="authorName">Martin Luther King, Jr</div>
+      <div className="authorName"> Ralph Waldo Emerson</div>
     </div>
   );
 }

@@ -1,0 +1,26 @@
+.sectionOauth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin: auto;
+  gap: 2vh;
+}
+
+.googleButton {
+  display: flex;
+  justify-content: center;
+  gap: 1vw;
+  border: 1px solid var(--success-color);
+  border-radius: min(1vh, 1vw);
+  width: 100%;
+  background-color: var(--success-color);
+  padding: 1vh 2vw 1vh 2vw;
+  font-size: min(2vh, 2vw);
+}
+
+.googleIcon {
+  margin-top: auto;
+  background-color: white;
+  border-radius: 50%;
+}
