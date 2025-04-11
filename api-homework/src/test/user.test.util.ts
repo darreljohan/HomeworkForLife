@@ -12,6 +12,13 @@ export class UserTest {
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
+      options: {
+        data: {
+          displayName: "{Default name}",
+          birthDate: new Date(2000, 1, 1).toISOString(),
+          ageExpentancy: 60,
+        },
+      },
     });
 
     if (error) {

@@ -52,10 +52,10 @@ export class UserController {
 
       res.cookie("refreshToken", response.refreshToken, {
         httpOnly: false, // Prevent client-side access
-        secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+        secure: true,
         sameSite: "lax", // Prevent CSRF attacks
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        path: "/",
+        path: "/auth/refresh",
       });
 
       res.status(200).json({ data: response });
@@ -113,6 +113,20 @@ export class UserController {
         body: response,
       });
       res.status(200).json({ data: response });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async me(req: UserAuthRequest, res: Response, next: NextFunction) {
+    try {
+      logger.info({
+        location: "userController.me",
+        message: "Passing user data to response",
+        body: req.user,
+      });
+
+      res.status(200).json({ data: req.user });
     } catch (error) {
       next(error);
     }

@@ -22,6 +22,7 @@ export type AuthResponse = {
 export type UserAuth = {
   id: string;
   email: string;
+  config?: UserData;
 };
 export interface UserAuthRequest extends Request {
   user?: UserAuth;

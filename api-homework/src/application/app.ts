@@ -8,7 +8,12 @@ import { errorMiddleware } from "../middleware/error.middleware";
 import { apiProtectedRouter } from "../router/api_protected";
 
 export const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:10161", // or your frontend URL
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(apiPublicRouter);
 app.use(apiProtectedRouter);
