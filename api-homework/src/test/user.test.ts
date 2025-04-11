@@ -249,3 +249,34 @@ describe("PUT user", () => {
     expect(response.body.error).toBeDefined();
   });
 });
+
+describe("GET me", () => {
+  let accessToken: string | undefined;
+  const email = "testerviajest_getme@gmail.com";
+  const password = "12341243";
+
+  beforeAll(async () => {
+    await UserTest.createUser(email, password);
+    accessToken = (await UserTest.loginUser(email, password)).session
+      ?.access_token;
+  });
+
+  it("should return user information by access token", async () => {
+    const response = await supertest(app)
+      .get("/auth")
+      .set("Authorization", `Bearer ${accessToken}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.config.displayName).toBeDefined();
+    expect(response.body.data.config.ageExpentancy).toBeDefined();
+  });
+
+  it("should return error if auth is not valid", async () => {
+    const response = await supertest(app)
+      .get("/auth")
+      .set("Authorization", `Bearer invalid_token`);
+
+    expect(response.status).toBe(401);
+    expect(response.body.error).toBeDefined();
+  });
+});

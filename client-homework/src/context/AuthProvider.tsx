@@ -47,6 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       );
       localStorage.setItem("token", authResponse.accessToken!);
       setUser(user);
+
       return user;
     } catch (error) {
       if (axios.isAxiosError(error)) {

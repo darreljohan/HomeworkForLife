@@ -30,17 +30,27 @@ export const authMiddleware = async (
     const decoded = jwt.verify(token, SUPABASE_JWT_SECRET) as {
       sub: string;
       email: string;
+      user_metadata: {
+        ageExpentancy: number;
+        birthDate: string;
+        displayName: string;
+      };
     };
 
     logger.info({
       location: "authMiddleware",
       message: "Success verifying jwt token",
-      body: authHeader,
+      body: decoded,
     });
 
     req.user = {
       id: decoded.sub,
       email: decoded.email,
+      config: {
+        ageExpentancy: decoded.user_metadata.ageExpentancy,
+        birthDate: decoded.user_metadata.birthDate,
+        displayName: decoded.user_metadata.displayName,
+      },
     };
 
     await supabase.auth.setSession({

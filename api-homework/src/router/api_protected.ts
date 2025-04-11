@@ -6,6 +6,7 @@ import { NoteController } from "../controller/note.controller";
 export const apiProtectedRouter = express.Router();
 
 apiProtectedRouter.use(authMiddleware);
+apiProtectedRouter.get("/auth", UserController.me);
 apiProtectedRouter.put("/user", UserController.updateUserData);
 
 apiProtectedRouter.post("/note", NoteController.create);
