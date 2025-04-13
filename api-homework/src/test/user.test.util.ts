@@ -40,4 +40,21 @@ export class UserTest {
 
     return data;
   }
+
+  static extractCookie(
+    cookies: string | string[],
+    cookieName: string
+  ): string | undefined {
+    // Ensure cookies is an array
+    const cookieArray = Array.isArray(cookies) ? cookies : [cookies];
+
+    // Find the cookie that starts with the desired name
+    const cookie = cookieArray.find((cookie) =>
+      cookie.startsWith(`${cookieName}=`)
+    );
+    if (!cookie) return undefined;
+
+    // Extract the value of the cookie
+    return cookie.split(";")[0].split("=")[1];
+  }
 }

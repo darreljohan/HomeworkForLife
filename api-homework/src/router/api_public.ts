@@ -6,3 +6,4 @@ export const apiPublicRouter = express.Router();
 apiPublicRouter.post("/auth/register", UserController.create);
 apiPublicRouter.post("/auth/login", UserController.login);
 apiPublicRouter.post("/auth/refresh", UserController.refreshToken);
+apiPublicRouter.post("/auth/logout", UserController.logout);

@@ -21,3 +21,16 @@
   gap: 1vw;
   align-items: center;
 }
+
+.text-secondary {
+  display: flex;
+  flex-direction: row;
+}
+
+.text-secondary-warn {
+  color: var(--failed-color);
+}
+
+.Warning-logo {
+  color: var(--failed-color);
+}

@@ -11,3 +11,7 @@ export type AuthResponse = {
   refreshToken?: string;
   config?: UserData;
 };
+
+export type RefreshResponse = {
+  accessToken: string;
+};

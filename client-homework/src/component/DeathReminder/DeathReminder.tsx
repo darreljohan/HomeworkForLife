@@ -35,10 +35,13 @@ const DeathReminder: React.FC = () => {
           className="DeathReminder-placeholder"
           onClick={() => handlePlaceholder()}
         >
-          <MdWarning />
-          <p className="text-secondary">
-            You haven't login, Click here to see demo placeholder
-          </p>
+          <MdWarning className="Warning-logo" />
+          <div className="text-secondary">
+            <p className="text-secondary-warn">You haven't login</p>
+            <p className="text-secondary-nowarn">
+              , Click here to see demo placeholder
+            </p>
+          </div>
         </div>
       )}
     </div>

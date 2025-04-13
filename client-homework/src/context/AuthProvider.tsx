@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import axios, { AxiosResponse } from "axios";
 import { useLoading } from "./LoadingContext";
 import { ResponseError, ResponseErrorType } from "../error/ResponseError";
-import { AuthResponse } from "../models/auth";
+import { AuthResponse, RefreshResponse } from "../models/auth";
 import { pageContext } from "./PageContext";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -14,17 +14,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { setPage } = useContext(pageContext);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      setTimeout(() => {}, 10000);
-      setUser(
-        new User("uid", "email", "name", dayjs(new Date(2002, 6, 1)), 40)
-      );
-    };
-    fetchUser();
+    setLoading(true);
+    getUser();
+    setLoading(false);
   }, []);
 
-  const logout = () => {
-    setUser(undefined);
+  const logout = async () => {
+    try {
+      setLoading(true);
+      const result: AxiosResponse<{ data: AuthResponse }> = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      localStorage.removeItem("token");
+      setUser(undefined);
+      setPage("home");
+      setMessage("Logout successful", true);
+    } catch (error) {
+      throw new ResponseError("Unknown error", "Unknown Message");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const login = async (email: string, password: string) => {
@@ -35,6 +48,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         {
           email: email,
           password: password,
+        },
+        {
+          withCredentials: true,
         }
       );
       const authResponse = result.data.data;
@@ -43,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         authResponse.email,
         authResponse.config?.displayName,
         dayjs(authResponse.config?.birthDate),
-        authResponse.config?.ageExpentancy || 40
+        Number(authResponse.config?.ageExpentancy) || 40
       );
       localStorage.setItem("token", authResponse.accessToken!);
       setUser(user);
@@ -82,6 +98,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const refreshToken = async () => {
+    try {
+      const result: AxiosResponse<{ data: RefreshResponse }> = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/refresh`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      localStorage.setItem("token", result.data.data.accessToken);
+      await getUser();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ResponseErrorType;
+        throw new ResponseError(errorResponse.error, errorResponse.message);
+      } else {
+        throw new ResponseError("Uncaught Error", "Unknown Message");
+      }
+    }
+  };
+
+  const getUser = async () => {
+    try {
+      const accessToken = localStorage.getItem("token");
+      const resultAccess: AxiosResponse<{ data: AuthResponse }> | void =
+        await axios.get(`${import.meta.env.VITE_API_URL}/auth`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+      const authResponse = resultAccess!.data.data;
+      const user = new User(
+        authResponse.id,
+        authResponse.email,
+        authResponse.config?.displayName,
+        dayjs(authResponse.config?.birthDate),
+        authResponse.config?.ageExpentancy || 40
+      );
+      setUser(user);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.status === 401) {
+          await refreshToken();
+        }
+        const errorResponse = error.response?.data as ResponseErrorType;
+        throw new ResponseError(errorResponse.error, errorResponse.message);
+      } else {
+        setPage("home");
+        throw new ResponseError("Uncaught Error", "Unknown Mesage");
+      }
     }
   };
 

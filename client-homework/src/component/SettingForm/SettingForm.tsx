@@ -7,6 +7,10 @@ import logo from "../../assets/logo.png";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "./SettingForm.css";
+import { useLoading } from "../../context/LoadingContext";
+import axios, { AxiosResponse } from "axios";
+import { ResponseError } from "../../error/ResponseError";
+import { AuthResponse } from "../../models/auth";
 
 type FormValues = {
   displayName: string;
@@ -24,8 +28,44 @@ const SettingForm: React.FC = () => {
   } = useForm<FormValues>();
   const { user } = useContext(authContext);
   const { setPage } = useContext(pageContext);
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const { setLoading, setMessage } = useLoading();
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      setLoading(true);
+      const accessToken = localStorage.getItem("token");
+      if (!accessToken) {
+        throw new ResponseError("Empty access token", "Please login again");
+      }
+      const result: AxiosResponse<{ data: AuthResponse }> = await axios.put(
+        `${import.meta.env.VITE_API_URL}/user`,
+        {
+          displayName: data.displayName,
+          birthDate: data.birthDate,
+          ageExpentancy: Number(data.ageExpentancy),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+
+      user?.setUserConfig(
+        result.data.data.config?.displayName,
+        dayjs(result.data.data.config?.birthDate),
+        Number(result.data.data.config?.ageExpentancy)
+      );
+      localStorage.setItem("token", result.data.data?.accessToken || "");
+      setMessage("Change data success", true);
+      setPage("Home");
+    } catch (error) {
+      setMessage("Change data failed", false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -59,6 +99,7 @@ const SettingForm: React.FC = () => {
                 trigger("displayName");
               },
             })}
+            defaultValue={user?.displayName || "Display Name"}
           />
           {errors.displayName && <p>{errors.displayName.message}</p>}
         </div>
@@ -67,7 +108,7 @@ const SettingForm: React.FC = () => {
           <Controller
             name="birthDate"
             control={control}
-            defaultValue={dayjs()} // Default value for the date picker
+            defaultValue={user?.birthDate || dayjs()} // Default value for the date picker
             rules={{ required: "Date is required" }}
             render={({ field }) => (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -140,6 +181,7 @@ const SettingForm: React.FC = () => {
                 trigger("ageExpentancy");
               },
             })}
+            defaultValue={user?.ageExpentancy || 40}
           />
           {errors.ageExpentancy && <p>{errors.ageExpentancy.message}</p>}
         </div>

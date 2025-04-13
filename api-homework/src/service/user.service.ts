@@ -146,7 +146,8 @@ export class UserService {
 
   static async updateUserConfig(
     user: UserAuth,
-    request: UserData
+    request: UserData,
+    refreshToken: string
   ): Promise<AuthResponse> {
     const updateRequest = Validation.validate(
       UserValidationService.USER_CONFIG,
@@ -163,6 +164,10 @@ export class UserService {
       data: updateRequest,
     });
 
+    const refreshAccessToken = await this.refreshToken({
+      refreshToken: refreshToken,
+    });
+
     if (error) {
       throw new ResponseError(400, error.message);
     }
@@ -176,6 +181,7 @@ export class UserService {
     const response: AuthResponse = {
       id: user.id,
       email: user.email,
+      accessToken: refreshAccessToken.accessToken,
       config: data.user.user_metadata as UserData,
     };
 

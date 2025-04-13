@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./.env" });
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import { apiPublicRouter } from "../router/api_public";
 import { errorMiddleware } from "../middleware/error.middleware";
@@ -14,6 +15,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 app.use(express.json());
 app.use(apiPublicRouter);
 app.use(apiProtectedRouter);

@@ -15,4 +15,15 @@ export class User {
   ) {
     this.lifePercentage = percentageCounter(birthDate, ageExpentancy);
   }
+
+  public setUserConfig(
+    displayName: string | undefined,
+    birthDate: Dayjs,
+    ageExpentancy: number
+  ) {
+    this.displayName = displayName;
+    this.birthDate = birthDate;
+    this.ageExpentancy = ageExpentancy;
+    this.lifePercentage = percentageCounter(birthDate, ageExpentancy);
+  }
 }

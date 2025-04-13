@@ -8,6 +8,7 @@ import {
   AuthResponse,
 } from "../model/user.model";
 import { NextFunction, Request, Response } from "express";
+import { ResponseError } from "../error/response.error";
 
 export class UserController {
   static async create(req: Request, res: Response, next: NextFunction) {
@@ -51,11 +52,11 @@ export class UserController {
       });
 
       res.cookie("refreshToken", response.refreshToken, {
-        httpOnly: false, // Prevent client-side access
-        secure: true,
-        sameSite: "lax", // Prevent CSRF attacks
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        path: "/auth/refresh",
+        path: "/",
       });
 
       res.status(200).json({ data: response });
@@ -69,11 +70,19 @@ export class UserController {
       logger.info({
         location: "userController.refreshToken",
         message: "Initiating user token refresh",
-        body: req.body,
+        body: req.cookies,
       });
 
-      const request: UserRefreshTokenRequest =
-        req.body as UserRefreshTokenRequest;
+      const refreshToken = req.cookies.refreshToken;
+
+      if (!refreshToken) {
+        throw new ResponseError(401, "Unauthorized: No refresh token provided");
+      }
+
+      const request: UserRefreshTokenRequest = {
+        refreshToken: refreshToken,
+      };
+
       const response: UserRefreshTokenResponse = await UserService.refreshToken(
         request
       );
@@ -101,10 +110,14 @@ export class UserController {
         message: "Initiating user data update",
         body: req.user,
       });
-
+      const refreshToken = req.cookies.refreshToken;
+      if (!refreshToken) {
+        throw new ResponseError(401, "Unauthorized: No refresh token provided");
+      }
       const response: AuthResponse = await UserService.updateUserConfig(
         req.user!,
-        req.body
+        req.body,
+        refreshToken
       );
 
       logger.info({
@@ -127,6 +140,32 @@ export class UserController {
       });
 
       res.status(200).json({ data: req.user });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      logger.info({
+        location: "userController.refreshToken",
+        message: "Initiating logout, deleting user token",
+        body: {},
+      });
+
+      res.clearCookie("refreshToken", {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+      });
+
+      logger.info({
+        location: "userController.refreshToken",
+        message: "Finishing logout",
+        body: {},
+      });
+
+      res.status(200).json({ data: { message: "success" } });
     } catch (error) {
       next(error);
     }

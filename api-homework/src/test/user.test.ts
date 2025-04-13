@@ -71,6 +71,13 @@ describe("POST auth/login", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.data.email).toBe(email);
+    const cookies = response.headers["set-cookie"];
+    logger.info({
+      location: "user.test",
+      message: "Retuning cookies",
+      body: cookies,
+    });
+    expect(cookies).toBeDefined();
   });
 
   it("Should return an error if email is missing", async () => {
@@ -122,24 +129,29 @@ describe("POST auth/login", () => {
 
 describe("POST auth/refresh-token", () => {
   let refreshToken: string | undefined;
-
+  const email = "testerviajest_refreshtoken@email.com";
+  const password = "12341234";
   beforeAll(async () => {
-    await UserTest.createUser(
-      "testerviajest_refreshtoken@email.com",
-      "12341234"
-    );
-    refreshToken = (
-      await UserTest.loginUser(
-        "testerviajest_refreshtoken@email.com",
-        "12341234"
-      )
-    ).session?.refresh_token;
+    await UserTest.createUser(email, password);
+
+    const response = await supertest(app)
+      .post("/auth/login")
+      .send({ email: email, password: password });
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.email).toBe(email);
+
+    const cookies = response.headers["set-cookie"];
+    expect(cookies).toBeDefined();
+
+    refreshToken = UserTest.extractCookie(cookies, "refreshToken");
+    expect(refreshToken).toBeDefined();
   });
 
   it("Should refresh token", async () => {
     const response = await supertest(app)
       .post("/auth/refresh")
-      .send({ refreshToken: refreshToken });
+      .set("Cookie", `refreshToken=${refreshToken}`);
 
     logger.info({
       location: "user.test",
@@ -160,14 +172,14 @@ describe("POST auth/refresh-token", () => {
       body: response.body,
     });
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(401);
     expect(response.body.error).toBeDefined();
   });
 
   it("Should return an error if refresh token is invalid", async () => {
     const response = await supertest(app)
       .post("/auth/refresh")
-      .send({ refresh_token: "invalid_refresh_token" });
+      .set("Cookie", `refreshToken=invalidTOKEN`);
 
     logger.info({
       location: "user.test",
@@ -181,20 +193,34 @@ describe("POST auth/refresh-token", () => {
 });
 
 describe("PUT user", () => {
+  let refreshToken: string | undefined;
   let accessToken: string | undefined;
   const email = "testerviajest_putuser@gmail.com";
   const password = "12341243";
 
   beforeAll(async () => {
     await UserTest.createUser(email, password);
-    accessToken = (await UserTest.loginUser(email, password)).session
-      ?.access_token;
+
+    const response = await supertest(app)
+      .post("/auth/login")
+      .send({ email: email, password: password });
+    expect(response.status).toBe(200);
+    expect(response.body.data.email).toBe(email);
+
+    const cookies = response.headers["set-cookie"];
+    expect(cookies).toBeDefined();
+
+    accessToken = response.body.data.accessToken;
+    expect(accessToken).toBeDefined();
+    refreshToken = UserTest.extractCookie(cookies, "refreshToken");
+    expect(refreshToken).toBeDefined();
   });
 
   it("should update all user metadata", async () => {
     const response = await supertest(app)
       .put("/user")
       .set("Authorization", `Bearer ${accessToken}`)
+      .set("Cookie", `refreshToken=${refreshToken}`)
       .send({
         displayName: "Test User",
         birthDate: new Date("1990-01-01").toISOString(),
@@ -213,6 +239,7 @@ describe("PUT user", () => {
     const response = await supertest(app)
       .put("/user")
       .set("Authorization", `Bearer ${accessToken}`)
+      .set("Cookie", `refreshToken=${refreshToken}`)
       .send({
         displayName: "Test User",
       });
@@ -225,6 +252,7 @@ describe("PUT user", () => {
     const response = await supertest(app)
       .put("/user")
       .set("Authorization", `Bearer ${accessToken}`)
+      .set("Cookie", `refreshToken=${refreshToken}`)
       .send({
         displayName: "Test User",
         birthDate: "INVALID DATE",
@@ -239,6 +267,7 @@ describe("PUT user", () => {
     const response = await supertest(app)
       .put("/user")
       .set("Authorization", `Bearer invalid_token`)
+      .set("Cookie", `refreshToken=${refreshToken}`)
       .send({
         displayName: "Test User",
         birthDate: "INVALID DATE",
