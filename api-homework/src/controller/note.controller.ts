@@ -38,10 +38,19 @@ export class NoteController {
         body: req.body,
       });
 
-      const response: Array<NoteResponse> = await NoteService.read(
-        req.user!,
-        req.body
-      );
+      const fromDate = req.query.fromDate?.toString() || "";
+      const toDate = req.query.toDate?.toString() || "";
+
+      logger.info({
+        location: "noteController.read",
+        message: "Check query",
+        body: `${fromDate} ${toDate}`,
+      });
+
+      const response: Array<NoteResponse> = await NoteService.read(req.user!, {
+        fromDate: fromDate,
+        toDate: toDate,
+      });
 
       logger.info({
         location: "noteController.read",

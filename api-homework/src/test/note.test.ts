@@ -114,7 +114,7 @@ describe("GET note", () => {
     const response = await supertest(app)
       .get("/note")
       .set("Authorization", `Bearer ${session?.access_token || ""}`)
-      .send({
+      .query({
         fromDate: createdNote![3].dateWritten,
         toDate: createdNote![0].dateWritten,
       });

@@ -5,8 +5,9 @@ import dayjs from "dayjs";
 import axios, { AxiosResponse } from "axios";
 import { useLoading } from "./LoadingContext";
 import { ResponseError, ResponseErrorType } from "../error/ResponseError";
-import { AuthResponse, RefreshResponse } from "../models/auth";
+import { AuthResponse } from "../models/auth";
 import { pageContext } from "./PageContext";
+import { apiClient } from "../utils/axiosInstance";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [userState, setUser] = useState<User | undefined>(undefined);
@@ -14,27 +15,36 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { setPage } = useContext(pageContext);
 
   useEffect(() => {
-    setLoading(true);
-    getUser();
-    setLoading(false);
+    const initializeUser = async () => {
+      setLoading(true); // Start loading
+      try {
+        await getUser(); // Wait for getUser to finish
+      } catch (error) {
+        console.error("Failed to initialize user:", error);
+      } finally {
+        setLoading(false); // Stop loading after getUser is done
+      }
+    };
+
+    initializeUser();
   }, []);
 
   const logout = async () => {
     try {
       setLoading(true);
-      const result: AxiosResponse<{ data: AuthResponse }> = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/logout`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
+      const result: AxiosResponse<{ data: AuthResponse }> =
+        await apiClient.post("/auth/logout");
       localStorage.removeItem("token");
       setUser(undefined);
       setPage("home");
       setMessage("Logout successful", true);
     } catch (error) {
-      throw new ResponseError("Unknown error", "Unknown Message");
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response?.data as ResponseErrorType;
+        throw new ResponseError(errorResponse.error, errorResponse.message);
+      } else {
+        throw new ResponseError("Uncaught Error", "Unknown Mesage");
+      }
     } finally {
       setLoading(false);
     }
@@ -43,16 +53,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const result: AxiosResponse<{ data: AuthResponse }> = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/login`,
-        {
+      const result: AxiosResponse<{ data: AuthResponse }> =
+        await apiClient.post(`/auth/login`, {
           email: email,
           password: password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+        });
       const authResponse = result.data.data;
       const user = new User(
         authResponse.id,
@@ -81,13 +86,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(true);
     await setTimeout(() => {}, 1000);
     try {
-      const result: AxiosResponse<{ data: AuthResponse }> = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/register`,
-        {
+      const result: AxiosResponse<{ data: AuthResponse }> =
+        await apiClient.post(`/auth/register`, {
           email: email,
           password: password,
-        }
-      );
+        });
       return result.data.data.email;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -101,32 +104,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const refreshToken = async () => {
-    try {
-      const result: AxiosResponse<{ data: RefreshResponse }> = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/refresh`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-      localStorage.setItem("token", result.data.data.accessToken);
-      await getUser();
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorResponse = error.response?.data as ResponseErrorType;
-        throw new ResponseError(errorResponse.error, errorResponse.message);
-      } else {
-        throw new ResponseError("Uncaught Error", "Unknown Message");
-      }
-    }
-  };
-
   const getUser = async () => {
     try {
       const accessToken = localStorage.getItem("token");
+
       const resultAccess: AxiosResponse<{ data: AuthResponse }> | void =
-        await axios.get(`${import.meta.env.VITE_API_URL}/auth`, {
+        await apiClient.get(`/auth`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -142,9 +125,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.status === 401) {
-          await refreshToken();
-        }
         const errorResponse = error.response?.data as ResponseErrorType;
         throw new ResponseError(errorResponse.error, errorResponse.message);
       } else {
