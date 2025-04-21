@@ -43,7 +43,7 @@ const CardSlider: React.FC = () => {
         {randomNotes.map((note) => (
           <TodayStoryCard
             key={note.id}
-            dateWritten={dayjs(note.date_written)}
+            dateWritten={dayjs(note.dateWritten)}
             note={note.note}
           />
         ))}

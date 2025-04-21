@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from "dayjs";
 
 export type Note = {
   id: string;
-  date_written: string;
+  dateWritten: string;
   note: string;
 };
 
@@ -15,7 +15,7 @@ export const fillMissingDates = (notes: Array<Note>): Array<Note> => {
   );
 
   const notesByDate = new Map(
-    notes.map((note) => [dayjs(note.date_written).format("YYYY-MM-DD"), note])
+    notes.map((note) => [dayjs(note.dateWritten).format("YYYY-MM-DD"), note])
   );
 
   const filledNotes: Array<Note> = last7Days.map((date) => {
@@ -26,7 +26,7 @@ export const fillMissingDates = (notes: Array<Note>): Array<Note> => {
       // Create a placeholder note for missing dates
       return {
         id: `placeholder-${formattedDate}`,
-        date_written: formattedDate,
+        dateWritten: formattedDate,
         note: "No note for this day",
       };
     }

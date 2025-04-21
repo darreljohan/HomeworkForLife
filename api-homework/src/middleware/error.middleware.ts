@@ -36,7 +36,7 @@ export const errorMiddleware = async (
     logger.error({
       location: "errorMiddleware.AuthError",
       message: "Auth Error from Auth Middleware",
-      body: error.message,
+      body: error,
     });
 
     res.status(error.status || 500).json({

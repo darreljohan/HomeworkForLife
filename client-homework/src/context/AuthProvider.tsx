@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(true);
       const result: AxiosResponse<{ data: AuthResponse }> =
         await apiClient.post("/auth/logout");
-      localStorage.removeItem("token");
+      localStorage.clear();
       setUser(undefined);
       setPage("home");
       setMessage("Logout successful", true);

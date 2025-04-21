@@ -11,6 +11,7 @@ import { useLoading } from "../../context/LoadingContext";
 import axios, { AxiosResponse } from "axios";
 import { ResponseError } from "../../error/ResponseError";
 import { AuthResponse } from "../../models/auth";
+import { apiClient } from "../../utils/axiosInstance";
 
 type FormValues = {
   displayName: string;
@@ -37,8 +38,8 @@ const SettingForm: React.FC = () => {
       if (!accessToken) {
         throw new ResponseError("Empty access token", "Please login again");
       }
-      const result: AxiosResponse<{ data: AuthResponse }> = await axios.put(
-        `${import.meta.env.VITE_API_URL}/user`,
+      const result: AxiosResponse<{ data: AuthResponse }> = await apiClient.put(
+        `/user`,
         {
           displayName: data.displayName,
           birthDate: data.birthDate,
@@ -49,7 +50,6 @@ const SettingForm: React.FC = () => {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
-          withCredentials: true,
         }
       );
 

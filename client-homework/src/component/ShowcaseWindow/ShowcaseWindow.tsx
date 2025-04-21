@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { pageContext } from "../../context/PageContext";
 import {
   DateCalendar,
@@ -10,10 +10,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "./ShowcaseWindow.css";
 import { styled } from "@mui/material";
 import logo from "../../assets/logo.png";
-import MOCK_DATA from "./MOCK_NOTE.json";
 import dayjs, { Dayjs } from "dayjs";
 import { Note } from "../../models/note";
 import TodayStoryCard from "../StoryCard/TodayStoryCard";
+import { getYearOfNotes } from "../../utils/getYearOfNotes";
+import { useLoading } from "../../context/LoadingContext";
+import { ResponseError } from "../../error/ResponseError";
 
 const StyledDateCalendar = styled(DateCalendar)({
   borderRadius: "0.5rem",
@@ -40,14 +42,49 @@ const StyledDateCalendar = styled(DateCalendar)({
 
 const ShowcaseWindow: React.FC = () => {
   const { setPage } = useContext(pageContext);
+  const { setLoading, setMessage } = useLoading();
   const [selectedCard, setSelectedCard] = useState<Note[]>([]);
   const [glowCardId, setGlowCardId] = useState<string | null>(null);
   const [slideInCardId, setSlideInCardId] = useState<string | null>(null);
+  const [cardState, setCardState] = useState<Note[]>([]);
+  const [firstRenderLoading, setFirstRenderLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const initialize = async () => {
+      try {
+        setLoading(true);
+        await firstRenderHandler(); // Wait for firstRenderHandler to finish
+      } catch (error) {
+        console.error("Error during first render:", error);
+      } finally {
+        setFirstRenderLoading(false);
+        setLoading(false);
+      }
+    };
+    initialize();
+  }, []);
+
+  const firstRenderHandler = async () => {
+    try {
+      const result = await getYearOfNotes(dayjs().year());
+      const notes = result.map((note) => ({
+        ...note,
+        date_written: dayjs(note.dateWritten).format("YYYY-MM-DD"),
+      }));
+      setCardState(notes);
+    } catch (error) {
+      if (error instanceof ResponseError) {
+        setMessage(error.message, false);
+      } else {
+        setMessage("Uncaught error", false);
+      }
+    }
+  };
 
   const onChangeHandler = (date: Dayjs | null) => {
     if (date) {
       const existingNote = selectedCard.find((note) =>
-        dayjs(note.date_written).isSame(date, "day")
+        dayjs(note.dateWritten).isSame(date, "day")
       );
 
       if (existingNote) {
@@ -56,14 +93,14 @@ const ShowcaseWindow: React.FC = () => {
         return;
       }
 
-      const notes = MOCK_DATA.filter((note) =>
-        dayjs(note.date_written).isSame(date, "day")
+      const notes = selectedCard.filter((note) =>
+        dayjs(note.dateWritten).isSame(date, "day")
       );
 
       if (notes.length === 0) {
         notes[0] = {
           id: date.toString(),
-          date_written: date.toString(),
+          dateWritten: date.toString(),
           note: "You haven't written anything on this day.",
         };
       }
@@ -85,22 +122,26 @@ const ShowcaseWindow: React.FC = () => {
     }
   };
 
-  const renderDay = (pickersDayProps: PickersDayProps<Dayjs>) => {
-    const isInMockData = MOCK_DATA.some((note) =>
-      dayjs(note.date_written).isSame(pickersDayProps.day, "day")
+  const renderMarkedDay = (pickersDayProps: PickersDayProps<Dayjs>) => {
+    const isInCardState = cardState.some((note) =>
+      dayjs(note.dateWritten).isSame(pickersDayProps.day, "day")
     );
 
     return (
       <PickersDay
         {...pickersDayProps}
         sx={{
-          ...(isInMockData && {
+          ...(isInCardState && {
             border: "2px solid green",
           }),
         }}
       />
     );
   };
+
+  if (firstRenderLoading) {
+    return <></>;
+  }
 
   return (
     <div className="Showcase">
@@ -116,7 +157,7 @@ const ShowcaseWindow: React.FC = () => {
       <div className="CalendarContainer">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <StyledDateCalendar
-            slots={{ day: renderDay }}
+            slots={{ day: renderMarkedDay }}
             onChange={onChangeHandler}
           ></StyledDateCalendar>
         </LocalizationProvider>
@@ -124,7 +165,7 @@ const ShowcaseWindow: React.FC = () => {
           {selectedCard.map((note) => (
             <TodayStoryCard
               key={note.id}
-              dateWritten={dayjs(note.date_written)}
+              dateWritten={dayjs(note.dateWritten)}
               note={note.note}
               glow={note.id === glowCardId ? "glow" : ""}
               slideIn={note.id === slideInCardId ? "slide-in" : ""}
