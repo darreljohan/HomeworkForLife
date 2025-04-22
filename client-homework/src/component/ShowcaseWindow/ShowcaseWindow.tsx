@@ -53,13 +53,11 @@ const ShowcaseWindow: React.FC = () => {
   useEffect(() => {
     const initialize = async () => {
       try {
-        setLoading(true);
         await firstRenderHandler(); // Wait for firstRenderHandler to finish
       } catch (error) {
         console.error("Error during first render:", error);
       } finally {
         setFirstRenderLoading(false);
-        setLoading(false);
       }
     };
     initialize();
@@ -125,7 +123,7 @@ const ShowcaseWindow: React.FC = () => {
 
   const onYearChangeHandler = async (newYear: Dayjs) => {
     try {
-      setLoading(true);
+      setFirstRenderLoading(true);
       setCurrentViewYear(newYear);
       const result = await getYearOfNotes(newYear.year());
       const notes = result.map((note) => ({
@@ -140,7 +138,7 @@ const ShowcaseWindow: React.FC = () => {
         setMessage("Uncaught error", false);
       }
     } finally {
-      setLoading(false);
+      setFirstRenderLoading(false);
     }
   };
 
@@ -167,9 +165,13 @@ const ShowcaseWindow: React.FC = () => {
     );
   };
 
-  if (firstRenderLoading) {
-    return <></>;
-  }
+  const renderLoadingComponent = () => {
+    return (
+      <div className="showcase-spinner-container">
+        <div className="showcase-spinner"></div>
+      </div>
+    );
+  };
 
   return (
     <div className="Showcase">
@@ -189,6 +191,8 @@ const ShowcaseWindow: React.FC = () => {
             onChange={onChangeHandler}
             onYearChange={onYearChangeHandler}
             onMonthChange={onMonthChangeHandler}
+            renderLoading={renderLoadingComponent}
+            loading={firstRenderLoading}
           ></StyledDateCalendar>
         </LocalizationProvider>
         <div className="NoteContainer">
