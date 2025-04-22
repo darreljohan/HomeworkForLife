@@ -48,6 +48,7 @@ const ShowcaseWindow: React.FC = () => {
   const [slideInCardId, setSlideInCardId] = useState<string | null>(null);
   const [cardState, setCardState] = useState<Note[]>([]);
   const [firstRenderLoading, setFirstRenderLoading] = useState<boolean>(true);
+  const [currentViewYear, setCurrentViewYear] = useState<Dayjs>(dayjs());
 
   useEffect(() => {
     const initialize = async () => {
@@ -69,7 +70,7 @@ const ShowcaseWindow: React.FC = () => {
       const result = await getYearOfNotes(dayjs().year());
       const notes = result.map((note) => ({
         ...note,
-        date_written: dayjs(note.dateWritten).format("YYYY-MM-DD"),
+        dateWritten: dayjs(note.dateWritten).format("YYYY-MM-DD"),
       }));
       setCardState(notes);
     } catch (error) {
@@ -93,7 +94,7 @@ const ShowcaseWindow: React.FC = () => {
         return;
       }
 
-      const notes = selectedCard.filter((note) =>
+      const notes = cardState.filter((note) =>
         dayjs(note.dateWritten).isSame(date, "day")
       );
 
@@ -119,6 +120,33 @@ const ShowcaseWindow: React.FC = () => {
         setGlowCardId(notes[0].id);
         setTimeout(() => setGlowCardId(null), 500);
       }
+    }
+  };
+
+  const onYearChangeHandler = async (newYear: Dayjs) => {
+    try {
+      setLoading(true);
+      setCurrentViewYear(newYear);
+      const result = await getYearOfNotes(newYear.year());
+      const notes = result.map((note) => ({
+        ...note,
+        dateWritten: dayjs(note.dateWritten).format("YYYY-MM-DD"),
+      }));
+      setCardState([...cardState, ...notes]);
+    } catch (error) {
+      if (error instanceof ResponseError) {
+        setMessage(error.message, false);
+      } else {
+        setMessage("Uncaught error", false);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onMonthChangeHandler = async (newMonth: Dayjs) => {
+    if (newMonth.subtract(1, "month").year() != currentViewYear.year()) {
+      await onYearChangeHandler(newMonth);
     }
   };
 
@@ -159,6 +187,8 @@ const ShowcaseWindow: React.FC = () => {
           <StyledDateCalendar
             slots={{ day: renderMarkedDay }}
             onChange={onChangeHandler}
+            onYearChange={onYearChangeHandler}
+            onMonthChange={onMonthChangeHandler}
           ></StyledDateCalendar>
         </LocalizationProvider>
         <div className="NoteContainer">

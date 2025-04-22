@@ -11,14 +11,24 @@ export async function getYearOfNotes(numberOfYears: number): Promise<Note[]> {
       data: Note[];
       lastUpdate: string;
     };
-    return data;
-  } else {
-    const result = await requestGetYearOfNotes(numberOfYears);
-    return result;
+
+    const isExpired = dayjs().diff(dayjs(lastUpdate), "hour") > 1;
+
+    if (!isExpired) {
+      return data;
+    }
   }
+
+  // Fetch new data if no cached data or if the cache is expired
+  const result = await requestGetYearOfNotes(numberOfYears);
+  saveNoteCookiesbyYear(numberOfYears, result);
+  return result;
 }
 
-export async function requestGetYearOfNotes(numberOfYears: number) {
+export async function requestGetYearOfNotes(
+  numberOfYears: number
+): Promise<Note[]> {
+  console.log("HITTING API");
   try {
     const fromDate = dayjs(`${numberOfYears}-01-01`)
       .startOf("year")
@@ -49,4 +59,19 @@ export async function requestGetYearOfNotes(numberOfYears: number) {
       throw new ResponseError("Unknown error", "An unknown error occurred");
     }
   }
+}
+
+export async function saveNoteCookiesbyYear(
+  numberOfYears: number,
+  data: Note[]
+) {
+  const serializedData = JSON.stringify({
+    data: data.map((note) => ({
+      ...note,
+      date_written: dayjs(note.dateWritten).toISOString(), // Ensure date is in string format
+    })),
+    lastUpdate: dayjs().toISOString(), // Add a timestamp for when the data was saved
+  });
+
+  localStorage.setItem(`${numberOfYears}`, serializedData);
 }
