@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest --detectOpenHandles --runInBand",
     "dev": "nodemon src/application/app.ts",
-    "prod": "node src/application/app.ts"
+    "prod": "ts-node src/application/app.ts"
   },
   "author": "",
   "license": "ISC",
