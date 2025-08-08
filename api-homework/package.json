@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles --runInBand",
-    "dev": "nodemon src/application/app.ts"
+    "dev": "nodemon src/application/app.ts",
+    "prod": "pm2 start src/application/app.ts"
   },
   "author": "",
   "license": "ISC",

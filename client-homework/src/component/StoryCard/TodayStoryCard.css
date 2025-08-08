@@ -23,9 +23,58 @@
   font-size: clamp(0.8rem, 0.8vw, 2rem);
 }
 
+.CardHeaderLeftSide {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(0.5rem, 0.7vw, 1rem);
+}
+
+.CardHeaderTags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.3rem;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-color: var(--background-color);
+  gap: clamp(0.3rem, 0.5vw, 0.7rem);
+}
+
+.CardHeaderTags.isTodayCard {
+  border-radius: min(0.7vh, 0.7vw);
+  padding: 0.25rem 0.7rem 0.25rem 0.7rem;
+  margin-left: 0rem;
+}
+
+.isTodayCard {
+  display: flex;
+  border-radius: min(0.7vh, 0.7vw);
+}
+
+.WrittenTag {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Style for when the note is a placeholder (blue dot) */
+.WrittenTag.blueGlow {
+  background-color: var(--negative-gradient-color-1);
+  box-shadow: 0 0 4px var(--negative-gradient-color-1);
+}
+
+/* Style for when the note is written (green dot) */
+.WrittenTag.greenGlow {
+  background-color: var(--positive-gradient-color-1);
+  box-shadow: 0 0 4px var(--positive-gradient-color-1);
+}
+
 .CardContent {
   width: 100%;
   font-size: clamp(0.7rem, 0.8vw, 2rem);
+  overflow: auto;
 }
 
 .CardContent p {
@@ -39,4 +88,13 @@
   resize: none; /* Preserve whitespace and wrap text */
   word-wrap: break-word;
   overflow: hidden;
+}
+
+.todayCard.greenGlow {
+  border: 1rem;
+  border-color: var(--positive-gradient-color-1);
+}
+
+.todayCard.blueGlow {
+  border-color: var(--negative-gradient-color-1);
 }

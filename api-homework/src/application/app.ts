@@ -11,7 +11,7 @@ import { apiProtectedRouter } from "../router/api_protected";
 export const app = express();
 app.use(
   cors({
-    origin: "http://localhost:10161", // or your frontend URL
+    origin: process.env.FRONTEND_URL, // or your frontend URL
     credentials: true,
   })
 );

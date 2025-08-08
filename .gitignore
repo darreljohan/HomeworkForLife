@@ -2,6 +2,7 @@ node_modules
 secret
 .env
 app.log
+dist
 
 .DS_Store
 Thumbs.db

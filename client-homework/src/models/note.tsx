@@ -6,6 +6,7 @@ export type Note = {
   id: string;
   dateWritten: string;
   note: string;
+  isPlaceholder?: boolean;
 };
 
 export const fillMissingDates = (notes: Array<Note>): Array<Note> => {
@@ -28,6 +29,7 @@ export const fillMissingDates = (notes: Array<Note>): Array<Note> => {
         id: `placeholder-${formattedDate}`,
         dateWritten: formattedDate,
         note: "No note for this day",
+        isPlaceholder: true,
       };
     }
   });

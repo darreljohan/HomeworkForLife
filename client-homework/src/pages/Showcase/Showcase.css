@@ -1,6 +1,16 @@
 .ShowcasePage {
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  height: 95vh;
+  width: 90vw;
+  height: 97vh;
+  box-sizing: border-box;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (min-width: 992px) {
+  .ShowcasePage {
+    width: 60vw;
+  }
 }

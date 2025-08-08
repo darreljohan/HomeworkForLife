@@ -2,7 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 
 export function DateCounter(birthDate: Dayjs, ageExpentancy: number) {
   const now = dayjs();
-  const deathDate = now.add(ageExpentancy, "year");
-  const diff = deathDate.diff(birthDate, "day");
+  const deathDate = birthDate.add(ageExpentancy, "year");
+  const diff = deathDate.diff(now, "day");
   return diff;
 }

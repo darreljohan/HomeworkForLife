@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ReactNode, useContext, useEffect, useState } from "react";
 import { User } from "../models/user";
 import { authContext } from "./AuthContext";
@@ -32,8 +33,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     try {
       setLoading(true);
-      const result: AxiosResponse<{ data: AuthResponse }> =
-        await apiClient.post("/auth/logout");
+
+      await apiClient.post("/auth/logout");
       localStorage.clear();
       setUser(undefined);
       setPage("home");

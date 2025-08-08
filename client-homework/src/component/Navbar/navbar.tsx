@@ -22,25 +22,31 @@ const Navbar: React.FC = () => {
       <ul className="navbar-menu">
         {user ? (
           <>
-            <li className="navbar-item">
-              <MdOutlineManageAccounts
-                className="icon"
-                onClick={() => setPage("Setting")}
-              />
+            <li
+              className="navbar-item clickable"
+              onClick={() => setPage("Setting")}
+            >
+              <MdOutlineManageAccounts className="icon" />
               <p>Setting</p>
             </li>
-            <li className="navbar-item" onClick={() => logout()}>
+            <li className="navbar-item clickable" onClick={() => logout()}>
               <MdLogout className="icon" />
               <p>Logout</p>
             </li>
           </>
         ) : (
           <>
-            <li className="navbar-item" onClick={() => setPage("Login")}>
+            <li
+              className="navbar-item clickable"
+              onClick={() => setPage("Login")}
+            >
               <MdOutlineLogin className="icon" />
               <p>Login</p>
             </li>
-            <li className="navbar-item" onClick={() => setPage("Register")}>
+            <li
+              className="navbar-item clickable"
+              onClick={() => setPage("Register")}
+            >
               <MdOutlineLogin className="icon" />
               <p>Register</p>
             </li>

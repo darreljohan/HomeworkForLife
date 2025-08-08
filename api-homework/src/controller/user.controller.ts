@@ -53,7 +53,7 @@ export class UserController {
 
       res.cookie("refreshToken", response.refreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         path: "/",

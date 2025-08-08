@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useForm } from "react-hook-form";
 import "./RegisterForm.css";
 import logo from "../../assets/logo.png";
@@ -18,7 +19,7 @@ type FormValues = {
   repeatPassword: string;
 };
 
-const RegisterForm: React.FC<ShortMessageProps> = ({ slideState }) => {
+const RegisterForm: React.FC<ShortMessageProps> = () => {
   const {
     register,
     handleSubmit,
@@ -96,8 +97,8 @@ const RegisterForm: React.FC<ShortMessageProps> = ({ slideState }) => {
             {...register("password", {
               required: "Password is required",
               minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters long",
+                value: 8,
+                message: "Password must be at least 8 characters long",
               },
               pattern: {
                 value: /^[a-zA-Z0-9._%+-]+$/,

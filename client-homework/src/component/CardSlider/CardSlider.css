@@ -4,16 +4,38 @@
   flex-direction: column;
   width: 100%;
   margin: 1rem 0 0 0;
+  gap: 0.25rem;
+}
+
+.CardSliderHeader {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.CardSliderMenuName {
+  font-size: clamp(0.8rem, 1vw, 2rem);
 }
 
 .ShowAllCard {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
-  width: 100%;
+  padding: 0 1.5vw 0 1.5vw;
   font-size: clamp(0.8rem, 1vw, 2rem);
+  align-items: center;
+  gap: 0.25rem;
 }
 
+.ShowAllCard:hover {
+  background-color: var(--workground-color);
+  border-radius: 0.25rem;
+}
+
+.ShowAllCard svg {
+  height: 100%;
+  width: auto;
+  color: var(--text-color);
+}
 .WeekCardSlider {
   display: flex;
   flex-grow: 1;
@@ -21,4 +43,26 @@
   gap: 1vh;
   height: 40vh;
   overflow-y: auto;
+}
+
+.cardSlider-spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.cardSlider-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -22,11 +22,14 @@ const DeathProgressBar: React.FC = () => {
       </div>
       <div className="TextBar">
         <div className="LifeSection Section">
-          <FaSeedling />
+          <div className="LegendSection">
+            <FaSeedling />
+            <p>Yesterday</p>
+          </div>
           <p>{lifePercentage}%</p>
         </div>
         <div className="DeathSection Section">
-          <p>{100 - lifePercentage}%</p>
+          <p>Tomorrow</p>
           <PiFlowerTulip />
         </div>
       </div>

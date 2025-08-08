@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useContext } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { pageContext } from "../../context/PageContext";
@@ -8,7 +9,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "./SettingForm.css";
 import { useLoading } from "../../context/LoadingContext";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { ResponseError } from "../../error/ResponseError";
 import { AuthResponse } from "../../models/auth";
 import { apiClient } from "../../utils/axiosInstance";
@@ -186,7 +187,7 @@ const SettingForm: React.FC = () => {
           {errors.ageExpentancy && <p>{errors.ageExpentancy.message}</p>}
         </div>
         <button className="SubmitButton" type="submit">
-          Login
+          Save Changes
         </button>
       </form>
     </div>
